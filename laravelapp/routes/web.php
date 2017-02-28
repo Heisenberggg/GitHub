@@ -12,9 +12,9 @@
 */
 
 /*获取参数*/
-Event::listen('illuminate.query',function($query){
+/*Event::listen('illuminate.query',function($query){
     var_dump($query);
-});
+});*/
 
 function rq($key = null,$default = null)
 {
@@ -31,10 +31,6 @@ function question_ins()
 {
     return new App\Model\Question;
 }
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::any('api/signup', function () {
     return user_ins()->signup();
@@ -66,3 +62,16 @@ Route::any('api/question/read', function () {
 
 Route::any('test/testredis','testcontroller@testredis');
 Route::any('test/testredis2','testcontroller@testredis2');
+
+Route::any('check/login','User\UserController@check_login');
+
+
+Route::any('login','User\UserController@login');
+//登录页面
+
+Route::group(['middleware' => ['web','user']], function () {
+
+    Route::any('/','Index\IndexController@index');
+    //后台首页路由
+
+});

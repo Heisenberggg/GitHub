@@ -88,5 +88,17 @@ class User extends Model
         return session('user_id') ?: false;
     }
 
+    /*获取用户信息*/
+    public function user_info()
+    {
+        if(!Request::get('id'))
+            return ['status' => 0, 'msg' => 'required id'];
+        $get = ['id','username','avatar_url','intro'];
+        $user = $this->find(Request::get('id'),$get);
 
+        if($user)
+           return $user->toArray();
+        return null;
+
+    }
 }
